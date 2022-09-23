@@ -1,0 +1,72 @@
+{% extends 'cart/layout.html' %}
+{% load static %}
+{% block content %}
+<div class="slideshow-container">
+
+			<div class="mySlides fade">
+			 
+			  <img class="imgslide" src="{% static '/images/New/watches.jpg'%}" style="width:100%">
+			  <div class="new_arrivals"><h1 class="glow">New Arrivals</h1></div>
+			</div>
+
+			<div class="mySlides fade">
+			  
+			  <img class="imgslide" src="{% static '/images/New/bmw.jpg'%}" style="width:100%">
+			  <div class="new_arrivals"><h1 class="glow">New Arrivals</h1></div>
+			</div>
+
+			<div class="mySlides fade">
+			  
+			  <img class="imgslide" src="{% static '/images/New/Dior.jpg'%}" style="width:100%">
+			  <div class="new_arrivals"><h1 class="glow">New Arrivals</h1></div>
+			</div>
+
+		</div>
+		<br>
+		
+		<br>
+ <div class="container">
+            <br>
+	<div class="row">
+		{% for product in products %}
+		
+		<div class="col-lg-4">
+			<img class="thumbnail" src="{{product.imageURL}}">
+			<div class="box-element product">
+				<h6><strong>{{product.name}}</strong></h6>
+				<hr>
+
+				
+				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"> <img  class="cart-icon" src="{% static 'images/cart-shopping.svg' %}"> Shop
+				</button>
+				
+				<a class="btn btn-outline-success" href="#">Like</a>
+				<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+ </div>
+ 
+ <script>
+	
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  
+  slides[slideIndex-1].style.display = "block";  
+  setTimeout(showSlides, 10000); // Change image every 2 seconds
+}
+
+	
+</script>
+{% endblock content %}
