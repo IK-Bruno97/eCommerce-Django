@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 import json
 import datetime
 from .models import * 
@@ -14,7 +15,12 @@ def main(request):
 	items = data['items']
 
 	products = Product.objects.all()
-	context = {'products':products, 'cartItems':cartItems}
+
+	paginator = Paginator(products, 12)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+
+	context = {'products':products, 'cartItems':cartItems, 'page_obj': page_obj}
 	return render(request, 'cart/main.html', context)
 
 
