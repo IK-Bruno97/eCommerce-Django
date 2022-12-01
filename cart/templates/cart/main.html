@@ -21,52 +21,66 @@
 			  <div class="new_arrivals"><h1 class="glow">New Arrivals</h1></div>
 			</div>
 
-		</div>
-		<br>
-		
-		<br>
- <div class="container">
-            <br>
+</div>
+<br>
+<br>
+
+<div class="container-fluid contaainer-fluid-px py-6">
+    <br>
 	<div class="row">
-		{% for product in products %}
+		{% for product in page_obj %}
 		
-		<div class="col-lg-4">
-			<img class="thumbnail" src="{{product.imageURL}}">
-			<div class="box-element product">
-				<h6><strong>{{product.name}}</strong></h6>
-				<hr>
-
-				
-				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"> <img  class="cart-icon" src="{% static 'images/cart-shopping.svg' %}"> Shop
-				</button>
-				
-				<a class="btn btn-outline-success" href="#">Like</a>
-				<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
-
-			</div>
+		<div class="col-xl-2 col-lg-3 col-md-4 col-6">
+            <div class="product">
+                    <img class="thumbnail" src="{{product.imageURL}}">
+                    <p style="word-wrap: break-word; text-align: center;"><strong>{{product.name}}</strong></p>
+                    <p style="text-align: center;">${{product.price|floatformat:2}}</p>
+                    
+                    <a style="padding-left:5px;" data-product="{{product.id}}" data-action="add" class=" btn-outline-secondary add-btn update-cart">Buy now &#128722;</a>
+                    <a style="display: inline-block; float: right; padding-right:5px;" class=" btn-outline-success" href="#">View</a>
+            </div>
 		</div>
+
 		{% endfor %}
 	</div>
- </div>
+</div>
+
+<hr>
+<br>
  
- <script>
-	
-let slideIndex = 0;
-showSlides();
+<div class="paginator">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      <a href="?page=1"> &laquo; first<a>
+      <a href="?page={{page_obj.previous_page_number}}">previous<a>
+    {% endif %}
 
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  
-  slides[slideIndex-1].style.display = "block";  
-  setTimeout(showSlides, 10000); // Change image every 2 seconds
-}
+    <span class="current">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}. </span>
 
+    {% if page_obj.has_next %}
+      <a href="?page={{page_obj.next_page_number}}"> next </a>
+      <a href="?page={{page_obj.paginator.num_pages}}">last&raquo;<a>
+    {% endif %}
+  </span>
+</div>
+
+<script>
 	
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    
+    slides[slideIndex-1].style.display = "block";  
+    setTimeout(showSlides, 10000); // Change image every 2 seconds
+    }
+    
 </script>
 {% endblock content %}
